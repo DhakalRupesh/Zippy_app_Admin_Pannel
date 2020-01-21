@@ -1,0 +1,22 @@
+body{
+  background-color: aqua;
+}
+
+.loginContainer{
+  height: 100%;
+ 
+  /* background-image: url('./CssImages/background.jpg');
+  background-position: top ;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; */
+}
+
+.centered {
+  margin: 0 auto;
+  margin-top: 20vh
+}
+
+.login_user_image{
+
+}
