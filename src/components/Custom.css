@@ -1,22 +1,35 @@
-body{
-  background-color: aqua;
-}
+
+@import url('https://fonts.googleapis.com/css?family=Rancho&display=swap');
 
 .loginContainer{
-  height: 100%;
- 
-  /* background-image: url('./CssImages/background.jpg');
+  background-color: #fafafa;
+  /* background-image: url('./CssImages/background.jpg'); */
   background-position: top ;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover; */
+  background-size: cover;
 }
 
-.centered {
+/* .centered {
   margin: 0 auto;
   margin-top: 20vh
-}
+} */
 
 .login_user_image{
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 120px;
+  width: 120px;
+}
+.login-text{
+  font-family: 'Rancho', cursive;
+  font-size: 40px;
+}
 
+.btnLogin{
+  color: #000 !important;
+  font-weight: 600 !important;
+  background-color: #FFC900 !important;
+  border-color: #FFC900 !important;
 }
