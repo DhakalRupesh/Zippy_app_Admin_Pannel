@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-// import React, { useState } from 'react';
 import { Container, Row, Col } from 'reactstrap'
 import { Navbar, UncontrolledDropdown,DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
+import { Link, Redirect } from 'react-router-dom'
 import './Custom_css/login.css'
 export default class Dashboard extends Component {
     render() {
-        // const [dropdownOpen, setDropdownOpen] = useState(false);
-
-        // const toggle = () => setDropdownOpen(prevState => !prevState);
         return (
           <div>
             <Navbar id="navLogoText" className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
@@ -51,22 +48,30 @@ export default class Dashboard extends Component {
 
           <Container>
             <Row>
-              <a class="col-lg-3 col-md-4 ml-5 shadow p-3 mb-5 rounded bg-warning text-dark mt-3 mb-3 pt-3 pb-3 controls" href="" style={{ width: '22rem' }}>
-                <h4 class="text-center"><img src="" alt="sportlogo"/></h4>
+              <Link class="col-lg-3 col-md-4 ml-5 shadow p-3 mb-5 rounded bg-warning text-dark mt-3 mb-3 pt-3 pb-3 controls" to="/members" style={{ width: '22rem' }}>
+                <h4 class="text-center"><img src={require('./CssImages/membersm.png')} alt="sportlogo"/></h4>
                 <h4 className="text-center">Members</h4>
-                <p className="text-center"><small>Add & Delete Admin</small></p>
-              </a>
+                <p className="text-center"><small>View Members info</small></p>
+              </Link>
               <a class="col-lg-1 col-md-4"></a>
               <a class="col-lg-3 col-md-4 shadow p-3 mb-5 rounded bg-warning text-dark mt-3 mb-3 pt-3 pb-3 controls" href="" style={{ width: '22rem' }}>
-                  <h4 class="text-center"><img src="" alt="sportlogo"/></h4>
-                  <h4 class="text-center">Property</h4>
+                  <h4 class="text-center"><img src={require('./CssImages/driverSm.png')} alt="sportlogo"/></h4>
+                  <h4 class="text-center">Riders</h4>
                   <p class="text-center"><small>Verify & Approve</small></p>              
               </a>
               <a class="col-lg-1 col-md-4"></a>
               <a class="col-lg-3 col-md-4 shadow p-3 mb-5 rounded bg-warning text-dark mt-3 mb-3 pt-3 pb-3 controls" href="" style={{ width: '22rem' }}>
-                  <h4 class="text-center"><img src="" alt="sportlogo"/></h4>
+                  <h4 class="text-center"><img src={require('./CssImages/adminsm.png')} alt="sportlogo"/></h4>
                   <h4 class="text-center">Admin</h4>
-                  <p class="text-center"><small>Queries</small></p>              
+                  <p class="text-center"><small>Register new admin</small></p>              
+              </a>
+            </Row>
+
+            <Row>
+              <a class="col-lg-3 col-md-4 ml-5 shadow p-3 mb-5 rounded bg-warning text-dark mt-3 mb-3 pt-3 pb-3 controls" href="" style={{ width: '22rem' }}>
+                <h4 class="text-center"><img src={require('./CssImages/driverSm.png')} alt="sportlogo"/></h4>
+                <h4 className="text-center">Riders</h4>
+                <p className="text-center"><small>View & Disable</small></p>
               </a>
             </Row>
           </Container>
