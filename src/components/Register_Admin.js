@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, Container, FormText } from 'reactstrap'
-import { Link, Redirect } from 'react-router-dom'
+import { Button, Form, FormGroup, Input, Alert } from 'reactstrap'
+// import { Link, Redirect } from 'react-router-dom'
 import './Custom.css'
 import axios from 'axios'
 
@@ -44,7 +44,10 @@ export default class Register_Admin extends Component {
 
     render() {
         if (this.state.isRegistered === true){
-            return <Redirect to="/"/>
+          return  <Alert color="success">
+                New admin successfully added
+            </Alert>
+            
         }
         return (
             <div className = "loginContainer d-flex" Style={"height:100vh"}>

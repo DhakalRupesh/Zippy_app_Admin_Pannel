@@ -24,15 +24,14 @@ export default class Login extends Component {
     handleClick = (e) => {
         console.log(this.state.username);
         e.preventDefault();
-        axios.post('http://localhost:3001/aduser/loginadmin', this.state)
+        axios.post('http://localhost:3001/aduser/login', this.state)
             .then((response) => {
                 localStorage.setItem('token', response.data.token);
 
                 this.setState({
                     username: '',
                     password: '',
-                    isLoggedIn: true
-                    
+                    isLoggedIn: true   
                 })
 
             }).catch((err) => console.log(err.response.data))
