@@ -10,8 +10,8 @@ export default class TaskList extends Component {
         super(props)
         this.state = {
             sort: false,
-            isEdit: false,
-            users: [],
+            imageView: false,
+            vehicle: [],
             isLoaded: false,
             config: {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -25,29 +25,18 @@ export default class TaskList extends Component {
         })
     }
 
-    // handleTaskChange = (e) => {
-    //     this.setState({
-    //         taskName: e.target.value,
-    //     })
-    // }
-
-    // handleDoneChange = (e) => {
-    //     this.setState({
-    //         taskDone: e.target.checked
-    //     })
-    // }
     componentDidMount() {
-        axios.get('http://localhost:3001/user/users', this.state.config)
+        axios.get('http://localhost:3001/vehicles', this.state.config)
         .then((response) => {
             this.setState({
-                user: response.data,
+                vehicle: response.data,
                 isLoaded: true
             })
         }).catch((err) => console.log(err.response));
     }
 
     render() {
-        var{ isLoaded, user } = this.state;
+        var{ isLoaded, vehicle } = this.state;
  
         if(!isLoaded) {
             return <div className="txt-center"> Error!! loading the data </div>
@@ -63,35 +52,38 @@ export default class TaskList extends Component {
                             </p>
                         </div>
                         <React.Fragment>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                    <th>View Details</th>
-                                    {/* <th>Sort</th> */}
-                                </tr>
-                            </thead>
-                                <tbody>
-                                    {
-                                        user.map((user)=>{
-                                        return <tr key={user._id}>
-                                                <td>{user.fname}</td>
-                                                <td>{user.lname}</td>
-                                                <td>{user.username}</td>
-                                                <td>
-                                                    <Link onClick={this.toggleEdit}>View</Link>
-                                                </td>
-                                            </tr>
-                                        })
-                                    }
-                                </tbody>
-                            </Table>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Brand Name</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Vehicle Number</th>
+                                        <th>License Number</th>
+                                        <th>View Image</th>
+                                        <th>Verifiaction</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        {
+                                            vehicle.map((vehicle) => {
+                                                return <tr key={vehicle}>
+                                                    <td>{vehicle.brandName}</td>
+                                                    <td>{vehicle.vehicleType}</td>
+                                                    <td>{vehicle.vehicle_no}</td>
+                                                    <td>{vehicle.license_no}</td>
+                                                    <td>  
+                                                         <Link onClick={this.toggleEdit}>View image</Link>
+                                                    </td>
+                                                    <td><Link>Verify </Link></td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                               </Table>
 
                             <Modal isOpen={this.state.isEdit} toggle={this.toggleEdit}>
                                 <ModalHeader toggle={this.toggleEdit}>
-                                    User Details
+                                    Vehicle Image
                                 </ModalHeader>
                                 <ModalBody>
                                 
@@ -104,7 +96,7 @@ export default class TaskList extends Component {
                         </React.Fragment>
                     </Container>
                 </div>
-            )
+                )
         }
     }
 }

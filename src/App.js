@@ -2,7 +2,7 @@ import React from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Members from './components/Members';
-import Rider_Verify from './components/Rider_Verify';
+import Rider_Verify from './components/Vehicle_Verify';
 import Register_Admin from './components/Register_Admin';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
