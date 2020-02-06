@@ -71,6 +71,6 @@ export default class TaskList extends Component {
                     </Container>
                 </div>
                 )
-        }
+        
     }
 }
