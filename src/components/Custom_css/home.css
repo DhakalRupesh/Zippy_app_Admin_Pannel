@@ -1,0 +1,116 @@
+.banner_area{
+    background: url('../CssImages/os.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+    min-height: 480px;
+}
+
+.banner_content{
+    position: relative !important;
+    margin-top: 180px;
+    color: #f5f5f5;
+    font-weight: bold !important;
+}
+
+.topText:hover{
+    Cursor:pointer;
+    opacity: 0.5;
+    transition: 2s;
+}
+
+.topText{
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    padding: 2px 8px 2px 8px;
+    margin: 0 0 0 5px;
+    color: #fff;
+    background: #060606;
+    border-radius: 100px;
+    padding: 7px 13px;
+}
+
+.feature-title p i {
+    color: #30caa0;
+}
+
+.feature-title i {
+    color: #30caa0;
+}
+/* feature */
+
+.feature-section .container {
+    margin-bottom: -50px;
+}
+
+.feature-item {
+    margin-bottom: 50px;
+}
+
+.feature-item .room-price {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    background: #fff;
+    text-align: center;
+    padding: 13px;
+    background: #30caa0;
+    color: #fff;
+}
+
+.feature-pic {
+    height: 250px;
+}
+
+.feature-pic .sale-notic,
+.feature-pic .rent-notic {
+    margin: 20px;
+}
+
+.feature-text {
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+
+.feature-title h3 {
+    font-weight: 400;
+}
+
+.feature-title p i {
+    color: #30caa0;
+}
+
+.room-info-warp {
+    padding: 12px;
+    padding-bottom: 0;
+}
+
+.room-info {
+    border-top: 1px solid #ebebeb;
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+.room-info p {
+    margin-bottom: 15px;
+}
+
+.room-info p i {
+    color: #30caa0;
+    margin-right: 10px;
+}
+
+.room-info:last-child .rf-right {
+    padding-right: 14px;
+}
+
+.room-info .rf-left {
+    float: left;
+    /* font-size: 10px; */
+}
+
+.room-info .rf-right {
+    float: right;
+    /* font-size: 10px; */
+}

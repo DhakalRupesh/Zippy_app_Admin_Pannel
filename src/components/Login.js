@@ -43,6 +43,7 @@ export default class Login extends Component {
         }
         return (
             <div className = "loginContainer d-flex" Style={"height:100vh"}>
+                <a href="/" className="text-right p-3"><i class="fa fa-home mr-5"></i></a>
                 <div className="text-center shadow p-3 bg-white rounded" style={{width: '22rem',margin:" auto"}}>
                     <div className="card-body">
                         <h3 className="login-text">Zippy</h3>
@@ -60,6 +61,7 @@ export default class Login extends Component {
                         </Form>
                     </div>
                 </div>
+                <a href="/ulogin" className="text-right p-3">Login as User</a>
             </div>            
         )
     }

@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Rancho&display=swap');
+.udashtext{
+    color: #f57f17 !important;
+    font-family: 'Rancho', cursive;
+    font-size: 28px !important;
+    /* margin-left: -20px;
+    margin-right: 50px; */
+    margin-left: 20px;
+    margin-right: 10px;
+}

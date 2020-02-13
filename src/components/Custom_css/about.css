@@ -1,0 +1,12 @@
+.page-top-section {
+    background: url('../CssImages/background.jpg') !important;
+    min-height: 190px;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.containertext h3{
+    text-align: center;
+    margin-top: 110px;
+}

@@ -1,0 +1,15 @@
+.add_user_Main{
+    height: 80%;
+    width: 83%;
+    background-color: #F8F9FA; 
+    transition: 0.5s; 
+    margin-left: 15%;
+    margin-top: 2%;
+    padding: 30px;
+    /* border: 1px #eeeeee solid; */
+    border-radius: 15px;
+}
+.form-control:focus {
+    border-color: #FFC900 !important;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 201, 0, 1) !important;
+}

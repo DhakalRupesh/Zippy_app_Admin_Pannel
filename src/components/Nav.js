@@ -39,7 +39,6 @@ export default class Nav extends Component {
             <Navbar id="navLogoText" className="navbar navbar navbar-dark bg-dark navbar-expand-lg text-white navbar-fixed-top txt">
                 <Container>
                   <span className="navbar-brand"  href="/dashboard">
-                      {/* <img class="img-Logo" src={require('./CssImages/zippy_logo_trans.png')} alt="logoofzippy"/>  */}
                       <a href="/dashboard" className="dashtext">Zippy</a>
                   </span>
                 

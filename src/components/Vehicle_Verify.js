@@ -3,7 +3,6 @@ import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container } 
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Nav from  './Nav'
-import UserList from './UserList'
 
 export default class TaskList extends Component {
     constructor(props) {
