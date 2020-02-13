@@ -6,6 +6,7 @@ import ULogin from './components/userLogin';
 import URegister from './components/Register_user'
 // import Side from './components/Sidebar';
 import Addadverties from './components/AddAdvertise';
+import AllAdver from './components/Advertise';
 import YourAd from './components/YourAd';
 import Profile from './components/Profile';
 import Vehicle from './components/Vehicle';
@@ -30,6 +31,7 @@ function App() {
       <Route exact path="/viewAd" component={YourAd}/>
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/vehicle" component={Vehicle} />
+      <Route exact path="/allAd" component={AllAdver}/>
       <PrivateRoute exact path='/members' component = {Members} />
       <PrivateRoute exact path='/riderverify' component={Rider_Verify}/>
       <PrivateRoute exact path='/registeradmin' component={Register_Admin}/>

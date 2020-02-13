@@ -20,6 +20,11 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </section>
+                <section className="set-bg m-3 text-center" > 
+                    <h3 className="text-dark">Featured Advertise</h3>
+                </section>
+
+                
             </div>
         )
     }

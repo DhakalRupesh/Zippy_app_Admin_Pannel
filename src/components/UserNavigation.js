@@ -56,7 +56,7 @@ export default class Index extends Component {
                                     <a class="nav-link" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/">Advertise</a>
+                                    <a class="nav-link" href="/allAd">Advertise</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/about">About</a>
