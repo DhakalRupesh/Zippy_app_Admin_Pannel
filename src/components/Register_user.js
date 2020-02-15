@@ -16,6 +16,7 @@ export default class Register_user extends Component {
             email: '',
             username: '',
             password: '',
+            empty: '',
             isRegistered: false
         }
     }
@@ -34,26 +35,63 @@ export default class Register_user extends Component {
 
     handleRegister = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/user/register', this.state)
-        .then((response)=>{
-            localStorage.setItem('token', response.data.token)
-            this.setState({
-                fname: '',
-                lname: '',
-                mobile: '',
-                email: '',
-                username: '',
-                password: '',
-                isRegistered: true,
-                alert1: true
-            })
-        }).catch((err) => console.log(err))
+        const isEmpty = this.checkEmpty();
+        if(isEmpty) {
+            axios.post('http://localhost:3001/user/register', this.state)
+            .then((response)=>{
+                localStorage.setItem('token', response.data.token)
+                this.setState({
+                    fname: '',
+                    lname: '',
+                    mobile: '',
+                    email: '',
+                    username: '',
+                    password: '',
+                    isRegistered: true,
+                    alert1: true
+                })
+            }).catch((err) => console.log(err))
+        }
+    }
+
+    checkEmpty = () => {
+        let empty = '';
+        
+        if(!this.state.fname) {
+            empty = "Empty Fields!! Please fill all the fields";
+        }
+
+        if(!this.state.lname) {
+            empty = "Empty Fields!! Please fill all the fields";
+        }
+
+        if(!this.state.mobile) {
+            empty = "Empty Fields!! Please fill all the fields";
+        }
+
+        if(!this.state.email) {
+            empty = "Empty Fields!! Please fill all the fields";
+        }
+
+        if(!this.state.username) {
+            empty = "Empty Fields!! Please fill all the fields";
+        }
+
+        if(!this.state.password) {
+            empty = "Empty Fields!! Please fill all the fields"
+        }
+
+        if ( empty ) {
+            this.setState({ empty });
+            return false;
+        }
+        return true;
     }
 
     render() {
         return (
             <div className = "loginContainer d-flex" Style={"height:100vh"}>
-                <a href="/" className="text-right p-3"><i class="fa fa-home mr-1"></i></a>
+                <a href="/" className="text-right p-3"><i class="fa fa-home mr-1"> Home</i></a>
                 {/* <Alert color="success" isOpen={this.state.alert2} >Added Successfully. </Alert> */}
                 <div className="text-center shadow p-3 bg-white rounded" style={{width: '22rem',margin:" auto"}}>
                     <div className="card-body">
@@ -71,7 +109,7 @@ export default class Register_user extends Component {
                                     value={this.state.lname} onChange={this.handleChange} required/>
                             </FormGroup>
                             <FormGroup>
-                                <Input className="form-control form-control-sm" name='mobile' type='text' placeholder="Enter Mobile Number"
+                                <Input className="form-control form-control-sm" name='mobile' type='number' placeholder="Enter Mobile Number"
                                     value={this.state.mobile} onChange={this.handleChange} required/>
                             </FormGroup>
                             <FormGroup>
@@ -86,11 +124,15 @@ export default class Register_user extends Component {
                                 <Input className="form-control form-control-sm" type='password' name='password' id='password' placeholder="Enter Password"
                                     value={this.state.password} onChange={this.handleChange} required/>
                             </FormGroup>
-                            <Button className="btn-block btnLogin mb-2 shadow"  onClick={this.handleRegister}>Register</Button>
+
+                            <small className="text-danger mb-2">{this.state.empty}</small>
+
+                            <Button className="btn-block btnLogin mb-3 mt-2 shadow"  onClick={this.handleRegister}>Register</Button>
                             Already Registered? <a href="/ulogin" className="text-right">Log-In</a>
                         </Form>
                     </div>
                 </div>
+                <a href="/" className="text-light p-3"><i class="fa fa-home mr-1"> Home</i></a>
             </div>
         )
     }

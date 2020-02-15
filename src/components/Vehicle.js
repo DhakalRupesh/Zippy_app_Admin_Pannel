@@ -110,7 +110,7 @@ export default class Vehicle extends Component {
                         </div>
                         <div className="form-group">
                             <label for="vehicle_no">Vehicle Number</label>
-                            <input type="number" name="vehicle_no" className="form-control" placeholder="eg: eg: BA.AA.0107" 
+                            <input type="text" name="vehicle_no" className="form-control" placeholder="eg: eg: BA.AA.0107" 
                             value={this.state.vehicle_no} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-group">

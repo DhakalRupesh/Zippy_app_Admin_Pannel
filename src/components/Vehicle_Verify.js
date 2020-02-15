@@ -1,77 +1,132 @@
 import React, { Component } from 'react'
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap'
+import { Table, Button, Modal, ModalHeader, ModalBody, Alert, Container, Fade } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Nav from  './Nav'
+import Nav from './Nav'
+import Axios from 'axios'
 
 export default class TaskList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            alert1: false,
-            verified:false,
+            verified: false,
             sort: false,
             imageView: false,
             vehicle: [],
+            veh: {},
             isLoaded: false,
+            licenseImage: {},
+            upStatus: 'true',
+            delMessage: false,
+            search: '',
             config: {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
             },
-            vehicleId:''
+            vehicleId: ''
         }
     }
 
     toggleEdit = (e) => {
+        Axios.get(`http://localhost:3001/vehicles/${e}`, this.state.config)
+            .then((response) => {
+                console.log(response.data)
+
+                this.setState({
+                    licenseImage: response.data,
+                })
+            }).catch((err) => console.log(err.response));
         this.setState({
             isEdit: !this.state.isEdit
         })
     }
 
+    updateSearch(event) {
+        this.setState({ search: event.target.value.substr(0, 20) })
+    }
+
     VerifyVehicle = (e) => {
         axios.put(`http://localhost:3001/vehicles/verify`, this.state.config)
-        .then((response)=>{
-            this.setState({
-                verified: response.data
-            })
-        }).catch((err) => console.log(err.response));
+            .then((response) => {
+                this.setState({
+                    verified: response.data
+                })
+            }).catch((err) => console.log(err.response));
     }
 
     componentDidMount() {
         axios.get('http://localhost:3001/vehicles', this.state.config)
-        .then((response) => {
-            this.setState({
-                vehicle: response.data,
-                isLoaded: true
-            })
-        }).catch((err) => console.log(err.response));
+            .then((response) => {
+                this.setState({
+                    vehicle: response.data,
+                    isLoaded: true
+                })
+            }).catch((err) => console.log(err.response));
     }
 
-    verifyAd(){
+    verifyAd() {
         this.setState({
-            verified:true
+            verified: true
         })
     }
 
     toogle() {
         this.setState({
-            alert1: !this.state.alert1
+            delMessage: !this.state.delMessage
         })
     }
 
-    verifyVehicle(vehicleId) {
-        // axios.put(`http://localhost:3001/vehicles/{$vehicleId}/verify`, this.state.config)
-        // .then((response) => {
-            // this.setState({
-            //     verified:this.state.verified
-            // })
-        // })
-      
+    // handleChange(e) {
+    //     this.setState({
+    //         upStatus: { ...this.state.upStatus, [e.target.name]: e.target.value }
+    //     })
+    // }
+
+    licenseImage = (e) => {
+        Axios.get(`http://localhost:3001/vehicles/${e}`, this.state.config)
+    }
+
+    verifyVehicle = (e) => {
+        this.setState({
+            veh: { ...this.state.veh, verified: "true" }
+        })
+        console.log(this.state.veh)
+        console.log(e)
+        Axios.put(`http://localhost:3001/vehicles/${e}`, this.state.veh)
+            .then((response) => {
+                console.log(response);
+                console.log(this.state.veh)
+            })
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    deleteVerify = (e) => {
+        if (window.confirm('Are you sure?')) {
+            const filterVehicle = this.state.vehicle.filter((vehicle) => {
+                return vehicle._id !== e
+            })
+            axios.delete(`http://localhost:3001/vehicles/${e}`, this.state.config)
+                .then((response) => {
+                    this.setState({
+                        delMessage: true,
+                        vehicle: filterVehicle
+                    })
+                })
+        }
     }
 
     render() {
-        var{ isLoaded, vehicle } = this.state;
- 
-        if(!isLoaded) {
+        let { isLoaded, vehicle, search } = this.state;
+        let filteredLicense = vehicle.filter(vec => {
+            return (
+                vec.license_no.toLowerCase().indexOf(search.toLowerCase()) !== -1
+            );
+        });
+        if (!isLoaded) {
             return <div className="txt-center"> Error!! loading the data </div>
         } else {
             return (
@@ -85,7 +140,16 @@ export default class TaskList extends Component {
                             </p>
                         </div>
                         <React.Fragment>
-                            <Table>
+                            <form>
+                                <input type="text"
+                                    onChange={this.handleChange.bind(this)}
+                                    className="form-control mb-3" placeholder="search license number........."
+                                    id="vehicleneed" name="search" />
+                            </form>
+                            <Alert color="danger" isOpen={this.state.delMessage} toggle={this.toogle.bind(this)}>Vehicle verificaiton removed</Alert>
+                            {/* <Alert color="danger" isOpen={} toggle={}>Vehicle verificaiton removed</Alert>
+                            <Alert color="danger" isOpen={} toggle={}>Vehicle unverified</Alert> */}
+                            <Table bordered>
                                 <thead>
                                     <tr>
                                         <th>Brand Name</th>
@@ -94,44 +158,61 @@ export default class TaskList extends Component {
                                         <th>License Number</th>
                                         <th>status</th>
                                         <th>View Image</th>
-                                        <th>Verifiaction</th>
+                                        <th>Verify</th>
+                                        <th>Remove Verification</th>
                                     </tr>
                                 </thead>
-                                    <tbody>
-                                        {
-                                            vehicle.map((vehicle) => {
-                                                return <tr key={vehicle._id}>
-                                                    <td>{vehicle.brandName}</td>
-                                                    <td>{vehicle.vehicleType}</td>
-                                                    <td>{vehicle.vehicle_no}</td>
-                                                    <td>{vehicle.license_no}</td>
-                                                    <td>{vehicle.verified}</td>
-                                                    <td>  
-                                                         <Link onClick={this.toggleEdit}>View image</Link>
-                                                    </td>
-                                                    <td><Link onClick={this.verifyVehicle()}>Verify</Link></td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                               </Table>
+                                <tbody className="text-center">
+                                    {
+                                        filteredLicense.map((vehicle) => {
+                                            return <tr key={vehicle._id}>
+                                                <td>{vehicle.brandName}</td>
+                                                <td>{vehicle.vehicleType}</td>
+                                                <td>{vehicle.vehicle_no}</td>
+                                                <td value={this.state.search} onChange={this.updateSearch.bind(this)}>{vehicle.license_no}</td>
+                                                <td>{vehicle.verified}</td>
+                                                <td>
+                                                    <Button color="primary" onClick={this.toggleEdit.bind(this, vehicle._id)}>More</Button>
+                                                </td>
+                                                <td>
+                                                    <Button className="mr-2" color="success" onClick={this.verifyVehicle.bind(this, vehicle._id)}>Verify</Button>
+                                                </td>
+                                                <td>
+                                                    <Button color="danger" onClick={this.deleteVerify.bind(this, vehicle._id)}>Delete</Button>
+                                                </td>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
 
                             <Modal isOpen={this.state.isEdit} toggle={this.toggleEdit}>
                                 <ModalHeader toggle={this.toggleEdit}>
-                                    Vehicle Image
+                                    More Information
                                 </ModalHeader>
                                 <ModalBody>
-                                
+                                    <label>License Image</label>
+                                    <img className="userimage"
+                                        src={`http://localhost:3001/uploads/${this.state.licenseImage.license_Image}`}
+                                        alt="Image not available"
+                                        style={{ height: '100%', width: '100%', borderRadius: '18px' }}
+                                    />
+                                    <pre></pre>
+                                    {/* <label>Owners Information</label>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>First Name: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.fname} </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Last Name: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.lname} </span></p>
+                                    <p class="p-2"><i class="fa fa-phone p-2 mr-1 i"></i>Mobile: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.mobile} </span></p>
+                                    <p class="p-2"><i class="fa fa-envelope p-2 mr-1 i"></i>Email: <span class="font-weight-bold"> 
+                                    {this.state.licenseImage.vehicleOf.email}
+                                    </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Username: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.username} </span></p>
+                                    <p class="p-2"><i class="fa fa-edit p-2 mr-1 i"></i> Description: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.description} </span></p> */}
                                 </ModalBody>
-                                <ModalFooter>
-                                    <Button color="primary" >Do Something</Button>{' '}
-                                    <Button color="secondary" >Cancel</Button>
-                                </ModalFooter>
                             </Modal>
                         </React.Fragment>
                     </Container>
                 </div>
-                )
+            )
         }
     }
 }

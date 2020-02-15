@@ -4,7 +4,7 @@ import Nav from './SideTop'
 import axios from 'axios' 
 import './Custom_css/addadvertise.css'
 import './Custom_css/profile.css'
-import { Container, CustomInput } from 'reactstrap'
+import { Container, CustomInput, Alert } from 'reactstrap'
 import FileUploadButton from './FileUploadButton'
 
 
@@ -15,10 +15,17 @@ export default class Profile extends Component {
     
         this.state = {
             user: {},
+            upMessage: false,
             config: {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
             }
         }
+    }
+
+    toogleUpdate() {
+        this.setState({
+            upMessage: !this.state.upMessage
+        })
     }
 
     componentDidMount(){
@@ -52,7 +59,9 @@ export default class Profile extends Component {
     updateUser = (e) => {
         e.preventDefault();
         axios.put('http://localhost:3001/user/updateme', this.state.user, this.state.config)
-            .then((response) => console.log(response.data)).catch((err) => console.log(err.response))
+            .then((response) => { 
+                this.setState({ upMessage: true})
+            }).catch((err) => console.log(err.response))
         this.props.history.push('/profile');
     }
 
@@ -95,6 +104,7 @@ export default class Profile extends Component {
                         <div class="card mt-3 shadow">
                         <div class="card-header h4">Edit your profile</div>
                                 <div class="card-body">
+                                    <Alert color="success" isOpen={this.state.upMessage} toggle={this.toogleUpdate.bind(this)}>Profile updated</Alert>
                                     <form action="" method="post" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">First Name</label>

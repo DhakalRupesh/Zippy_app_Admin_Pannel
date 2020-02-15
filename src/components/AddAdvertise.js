@@ -40,6 +40,12 @@ export default class AddAdvertise extends Component {
         })
     }
 
+    toogleSuccess(){
+        this.setState({
+            alert2: !this.state.alert2
+        })
+    }
+
     componentDidMount() {
         Axios.get('http://localhost:3001/user/retriveme', this.state.config)
             .then((response)=>{
@@ -63,6 +69,7 @@ export default class AddAdvertise extends Component {
         data.append('imageFile', this.state.selectedFile)
         Axios.post('http://localhost:3001/uploads', data, this.state.config)
             .then((response) => {
+                console.log(response.data.filename);    
                 this.setState({
                     image: response.data.filename,
                     alert1: true,
@@ -92,7 +99,8 @@ export default class AddAdvertise extends Component {
                 destinationofdelivery: '',
                 priceofdelivery: '',
                 negociable: '',
-                ad_image: ''
+                ad_image: '',
+                alert2: true
             })
         })
     }
@@ -106,6 +114,8 @@ export default class AddAdvertise extends Component {
                     <h3 className="mb-4">Request Dilevery</h3>
                    
                     <form>
+                        <Alert color="success" isOpen={this.state.alert1} toggle={this.toogle.bind(this)}>Image Added</Alert>
+                        <Alert color="success" isOpen={this.state.alert2} toggle={this.toogleSuccess.bind(this)}> Advertise Added </Alert>
                         <div className="form-group">
                             <label for="typesofdilevery">Type of dilevery</label>
                             <input type="text" name="goodstype" className="form-control" placeholder="eg: room shift, docs, furniture" 
@@ -146,18 +156,13 @@ export default class AddAdvertise extends Component {
                         </div>
 
                         <label>select image</label>
-                        <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="image"
-                                onChange={this.handleFileSelect}/>
-                                {this.state.selectedFile ? (<FileUploadButton
+                        <div className="form-group row">
+                            <CustomInput type='file' id='userimage'
+                                onChange={this.handleFileSelect} />
+                            {this.state.selectedFile ? (<FileUploadButton
                                 uploadFile={this.uploadFile} />) : null}
-                            <label className="custom-file-label" for="customFile">Choose file</label>
                         </div>
 
-                        <div>
-                            <Alert color="success" isOpen={this.state.alert1} toggle={this.toogle.bind(this)}>Image Added Successfully. </Alert>
-                            <Alert color="success" isOpen={this.state.alert2} >Added Successfully. </Alert>
-                        </div>
                         <button type="submit" className="form-control btn btn-warning aligin-center mt-3" onClick={this.addAdvertisement}>Post</button>
                     </form>
                 </div>
