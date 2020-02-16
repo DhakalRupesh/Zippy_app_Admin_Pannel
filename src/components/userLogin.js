@@ -39,13 +39,12 @@ export default class Login extends Component {
 
     render() {
         if (this.state.isLoggedIn) {
-            return <Redirect to='/addAD' />
+            return <Redirect to='/index' />
         } 
         return (
             <div>
                 <div className = "loginContainer d-flex" Style={"height:100vh"}>
-                    <a href="/" className="text-right p-3"><i class="fa fa-home mr-5"></i></a>
-                    <div className="text-center shadow p-3 bg-white rounded" style={{width: '22rem',margin:" auto"}}>
+                    <div className="text-center shadow p-3 bg-white rounded " style={{width: '22rem',margin:" auto"}}>
                         <div className="card-body">
                             <h3 className="login-text">Zippy</h3>
                             <img className="login_user_image" src={require('./CssImages/user3.png')} alt="userlogo"/>
@@ -62,8 +61,8 @@ export default class Login extends Component {
                             </Form>
                             Dont have an account? <a href="/uRegister" className="text-right">Sign-Up</a>
                         </div>
+                        <a href="/login" className="text-right p-3">Login as Admin</a>
                     </div>
-                    <a href="/login" className="text-right p-3">Login as Admin</a>
                 </div>
             </div>          
         )

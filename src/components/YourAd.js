@@ -24,8 +24,9 @@ export default class YourAd extends Component {
     }
     
     componentDidMount() {
-        Axios.get(`http://localhost:3001/advertise`, 
-        this.state.config).then((response) => {
+        Axios.get(`http://localhost:3001/advertise/`, 
+        this.state.config).then((response) => {console.log(response.data);
+
             this.setState({
                 advertise: response.data,
                 isLoaded: true
@@ -34,10 +35,10 @@ export default class YourAd extends Component {
     }
 
     render() {
-        var{ isLoaded, advertise } = this.state;
-        if(!isLoaded){
-            return <div className="txt-center"> Error!! loading the data </div>
-        } else {
+        // var{ isLoaded, advertise } = this.state;
+        // if(!isLoaded){
+        //     return <div className="txt-center"> Error!! loading the data </div>
+        // } else {
             return (
                 <div>
                     <Nav></Nav>
@@ -54,11 +55,11 @@ export default class YourAd extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    advertise.map((advertise)=>{
-                                    return <tr key={advertise._id}>
-                                            <td>{advertise.postedby}</td>
-                                            <td>{advertise.goodstype}</td>
-                                            <td>{advertise.vehicleneed}</td>
+                                    this.state.advertise.map(adv=>{
+                                    return <tr key={adv._id}>
+                                            <td>{adv.postedby.username}</td>
+                                            <td>{adv.goodstype}</td>
+                                            <td>{adv.vehicleneed}</td>
                                         </tr>
                                     })
                                 }
@@ -68,5 +69,5 @@ export default class YourAd extends Component {
                 </div>
             )
         }
-    }
+    // }
 }

@@ -31,8 +31,8 @@ export default class Index extends Component {
     
         handleLogout = (e) => {
           e.preventDefault();
-          this.props.history.push('/ulogin')
           localStorage.removeItem('token');
+          this.props.history.push('/');
         }
         
     render() {
@@ -41,7 +41,7 @@ export default class Index extends Component {
                 <nav id="a" class="navbar navbar navbar-light bg-light navbar-expand-lg text-white navbar-fixed-top txt" style={{ minHeight: '80px' }}>
                     <Container>
                         <span className="navbar-brand"  href="/">
-                            <a href="/" className="udashtext">Zippy</a>
+                            <a href="/index" className="udashtext">Zippy</a>
                         </span>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -53,7 +53,7 @@ export default class Index extends Component {
                                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                                 </li> */}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/">Home</a>
+                                    <a class="nav-link" href="/index">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/allAd">Advertise</a>

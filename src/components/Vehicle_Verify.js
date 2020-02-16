@@ -8,13 +8,15 @@ export default class TaskList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            verified:false,
             sort: false,
             imageView: false,
             vehicle: [],
             isLoaded: false,
             config: {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-            }
+            },
+            vehicleId:''
         }
     }
 
@@ -22,6 +24,15 @@ export default class TaskList extends Component {
         this.setState({
             isEdit: !this.state.isEdit
         })
+    }
+
+    VerifyVehicle = (e) => {
+        axios.put(`http://localhost:3001/vehicles/verify`, this.state.config)
+        .then((response)=>{
+            this.setState({
+                verified: response.data
+            })
+        }).catch((err) => console.log(err.response));
     }
 
     componentDidMount() {
@@ -32,6 +43,24 @@ export default class TaskList extends Component {
                 isLoaded: true
             })
         }).catch((err) => console.log(err.response));
+    }
+
+    verifyAd(){
+        this.setState({
+            verified:true
+        })
+    }
+
+    verifyVehicle(vehicleId) {
+        axios.put(`http://localhost:3001/vehicles/{$vehicleId}/verify`,
+        {verified: this.state.verified}, 
+        this.setState.config)
+        .then((response) => {
+            console.log(response.data);
+            this.setState({
+                verified:this.state.verified
+            })
+        })
     }
 
     render() {
@@ -58,6 +87,7 @@ export default class TaskList extends Component {
                                         <th>Vehicle Type</th>
                                         <th>Vehicle Number</th>
                                         <th>License Number</th>
+                                        <th>status</th>
                                         <th>View Image</th>
                                         <th>Verifiaction</th>
                                     </tr>
@@ -65,15 +95,16 @@ export default class TaskList extends Component {
                                     <tbody>
                                         {
                                             vehicle.map((vehicle) => {
-                                                return <tr key={vehicle}>
+                                                return <tr key={vehicle._id}>
                                                     <td>{vehicle.brandName}</td>
                                                     <td>{vehicle.vehicleType}</td>
                                                     <td>{vehicle.vehicle_no}</td>
                                                     <td>{vehicle.license_no}</td>
+                                                    <td>{vehicle.verified}</td>
                                                     <td>  
                                                          <Link onClick={this.toggleEdit}>View image</Link>
                                                     </td>
-                                                    <td><Link>Verify </Link></td>
+                                                    <td><Link onClick={this.verifyVehicle.bind(vehicle._id)}>Verify</Link></td>
                                                 </tr>
                                             })
                                         }

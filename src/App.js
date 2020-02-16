@@ -12,7 +12,7 @@ import Profile from './components/Profile';
 import Vehicle from './components/Vehicle';
 import Dashboard from './components/Dashboard';
 import Members from './components/Members';
-import Rider_Verify from './components/Vehicle';
+import VehicleVerify from './components/Vehicle_Verify';
 import Register_Admin from './components/Register_Admin';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
@@ -22,8 +22,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
   return (   
    <Router>
-      <Route exact path='/' component={Index} />
+      <Route exact path='/' component={ULogin} />
       <Route exact path="/about" component={About} />
+      <Route exact path="/index" component={Index} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/ulogin" component={ULogin} />
       <Route exact path="/uRegister" component={URegister} />
@@ -33,7 +34,7 @@ function App() {
       <Route exact path="/vehicle" component={Vehicle} />
       <Route exact path="/allAd" component={AllAdver}/>
       <PrivateRoute exact path='/members' component = {Members} />
-      <PrivateRoute exact path='/riderverify' component={Rider_Verify}/>
+      <PrivateRoute exact path='/vehicleverify' component={VehicleVerify}/>
       <PrivateRoute exact path='/registeradmin' component={Register_Admin}/>
       <PrivateRoute exact path='/dashboard' component={Dashboard}/>
    </Router>

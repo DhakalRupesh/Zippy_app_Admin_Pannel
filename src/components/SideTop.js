@@ -27,8 +27,8 @@ export default class SideTop extends Component {
     
         handleLogout = (e) => {
           e.preventDefault();
-          this.props.history.push('/ulogin')
           localStorage.removeItem('token');
+          this.props.history.push('/ulogin')
         }
 
     render() {

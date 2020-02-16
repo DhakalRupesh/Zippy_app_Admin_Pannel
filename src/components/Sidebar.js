@@ -7,7 +7,7 @@ export default class Sidebar extends Component {
             <div>
                 <div id="mySidebar" className="sidebar">
                     <span className="navbar-brand"  href="/">
-                        <a href="/" className="udashtextSide">Zippy</a>
+                        <a href="/index" className="udashtextSide">Zippy</a>
                     </span>
 
                     <a href="/addAd">Add Advertise</a>
