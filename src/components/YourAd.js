@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'reactstrap'
+import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Nav from './SideTop'
 import Axios from 'axios'
@@ -23,6 +24,7 @@ export default class YourAd extends Component {
         })
     }
     
+    
     componentDidMount() {
         Axios.get(`http://localhost:3001/advertise/`, 
         this.state.config).then((response) => {console.log(response.data);
@@ -33,6 +35,8 @@ export default class YourAd extends Component {
             })
         }).catch((err)=> console.log(err.response));
     }
+
+
 
     render() {
         // var{ isLoaded, advertise } = this.state;
@@ -51,15 +55,25 @@ export default class YourAd extends Component {
                                     <th>Delivery Type</th>
                                     <th>Vehicle Needed</th>
                                     {/* <th>Sort</th> */}
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.advertise.map(adv=>{
                                     return <tr key={adv._id}>
-                                            <td>{adv.postedby.username}</td>
+                                            {/* <td>{adv.postedby.username}</td> */}
                                             <td>{adv.goodstype}</td>
                                             <td>{adv.vehicleneed}</td>
+                                            <td>{adv.goodstype}</td>
+                                            <td>
+                                                <Link onClick={this.toggleEdit}>View</Link>
+                                            </td>
+                                            <td>
+                                                <Link onClick={this.toggleDelete}>Delete</Link>
+                                            </td>
                                         </tr>
                                     })
                                 }

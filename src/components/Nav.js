@@ -19,7 +19,6 @@ export default class Nav extends Component {
     componentDidMount(){
       axios.get('http://localhost:3001/aduser/retriveme', this.state.config)
         .then((response) => {
-          // console.log(response.data)
           this.setState({
               user: response.data
         })
