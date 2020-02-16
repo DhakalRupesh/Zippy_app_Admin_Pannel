@@ -22,17 +22,17 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
   return (   
    <Router>
-      <Route exact path='/' component={ULogin} />
+      <Route exact path='/' component={Index} />
       <Route exact path="/about" component={About} />
       <Route exact path="/index" component={Index} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/ulogin" component={ULogin} />
       <Route exact path="/uRegister" component={URegister} />
-      <Route exact path="/addAd" component={Addadverties} />
-      <Route exact path="/viewAd" component={YourAd}/>
-      <Route exact path="/profile" component={Profile} />
-      <Route exact path="/vehicle" component={Vehicle} />
-      <Route exact path="/allAd" component={AllAdver}/>
+      <PrivateRoute exact path="/addAd" component={Addadverties} />
+      <PrivateRoute exact path="/viewAd" component={YourAd}/>
+      <PrivateRoute exact path="/profile" component={Profile} />
+      <PrivateRoute exact path="/vehicle" component={Vehicle} />
+      <PrivateRoute exact path="/allAd" component={AllAdver}/>
       <PrivateRoute exact path='/members' component = {Members} />
       <PrivateRoute exact path='/vehicleverify' component={VehicleVerify}/>
       <PrivateRoute exact path='/registeradmin' component={Register_Admin}/>

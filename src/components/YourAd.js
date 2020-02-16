@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
-import { Table } from 'reactstrap'
+import { Table, Alert } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Nav from './SideTop'
 import Axios from 'axios'
+import Advertise from './Advertise'
 
 export default class YourAd extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+            isActive: false,
+            visible1: false,
             advertise: [],
             isLoaded: false,
+            user: {},
             config: {
-                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-            }
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            },
         }
     }
 
@@ -24,7 +28,12 @@ export default class YourAd extends Component {
         })
     }
     
-    
+    toogle() {
+        this.setState({
+            visible1: !this.state.visible1
+        })
+    }
+
     componentDidMount() {
         Axios.get(`http://localhost:3001/advertise/`, 
         this.state.config).then((response) => {console.log(response.data);
@@ -36,18 +45,27 @@ export default class YourAd extends Component {
         }).catch((err)=> console.log(err.response));
     }
 
-
+    toggleDelete = (adId) => {
+        Axios.delete(`http://localhost:3001/advertise/${adId}`, this.state.config)
+        .then((response)=>{
+            const filterAdvertise = this.state.advertise.filter((advertise)=>{
+                return advertise._id !== adId
+            })
+            this.setState({
+                visible1: true,
+                advertise: filterAdvertise
+            }).catch((err) => console.log(err.response));
+        })
+    }    
 
     render() {
-        // var{ isLoaded, advertise } = this.state;
-        // if(!isLoaded){
-        //     return <div className="txt-center"> Error!! loading the data </div>
-        // } else {
             return (
                 <div>
                     <Nav></Nav>
                     <Sidebar></Sidebar>
                     <div className="add_user_Main shadow-sm ">
+                        <Alert color="danger" isOpen={this.state.visible1} toggle={this.toogle.bind(this)}>Property had been removed...</Alert>
+
                         <Table>
                             <thead>
                                 <tr>
@@ -55,7 +73,7 @@ export default class YourAd extends Component {
                                     <th>Delivery Type</th>
                                     <th>Vehicle Needed</th>
                                     {/* <th>Sort</th> */}
-                                    <th>Edit</th>
+                                    {/* <th>Edit</th> */}
                                     <th>Delete</th>
 
                                 </tr>
@@ -64,15 +82,14 @@ export default class YourAd extends Component {
                                 {
                                     this.state.advertise.map(adv=>{
                                     return <tr key={adv._id}>
-                                            {/* <td>{adv.postedby.username}</td> */}
+                                            <td>{adv.postedby.username}</td>
                                             <td>{adv.goodstype}</td>
                                             <td>{adv.vehicleneed}</td>
-                                            <td>{adv.goodstype}</td>
-                                            <td>
+                                            {/* <td>
                                                 <Link onClick={this.toggleEdit}>View</Link>
-                                            </td>
+                                            </td> */}
                                             <td>
-                                                <Link onClick={this.toggleDelete}>Delete</Link>
+                                                <Link onClick={() => this.toggleDelete(adv._id)}>Delete</Link>
                                             </td>
                                         </tr>
                                     })
@@ -83,5 +100,4 @@ export default class YourAd extends Component {
                 </div>
             )
         }
-    // }
 }

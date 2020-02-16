@@ -4,7 +4,8 @@ import Nav from './SideTop'
 import Axios from 'axios'
 import './Custom_css/addadvertise.css'
 import FileUploadButton from './FileUploadButton'
-import {Alert} from 'reactstrap'
+import { Alert, CustomInput, Container } from 'reactstrap'
+
 
 export default class AddAdvertise extends Component {
     constructor(props) {
@@ -144,6 +145,7 @@ export default class AddAdvertise extends Component {
                             </select>
                         </div>
 
+                        <label>select image</label>
                         <div className="custom-file">
                             <input type="file" className="custom-file-input" id="image"
                                 onChange={this.handleFileSelect}/>
@@ -151,9 +153,10 @@ export default class AddAdvertise extends Component {
                                 uploadFile={this.uploadFile} />) : null}
                             <label className="custom-file-label" for="customFile">Choose file</label>
                         </div>
+
                         <div>
-                        <Alert color="success" isOpen={this.state.alert1} toggle={this.toogle.bind(this)}>Image Added Successfully. </Alert>
-                        <Alert color="success" isOpen={this.state.alert2} >Added Successfully. </Alert>
+                            <Alert color="success" isOpen={this.state.alert1} toggle={this.toogle.bind(this)}>Image Added Successfully. </Alert>
+                            <Alert color="success" isOpen={this.state.alert2} >Added Successfully. </Alert>
                         </div>
                         <button type="submit" className="form-control btn btn-warning aligin-center mt-3" onClick={this.addAdvertisement}>Post</button>
                     </form>

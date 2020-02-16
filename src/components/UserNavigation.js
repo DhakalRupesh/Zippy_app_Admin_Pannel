@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Container } from 'reactstrap'
 import { Navbar, UncontrolledDropdown,DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import './Custom_css/usernav.css'
 
-export default class Index extends Component {
-
+class UserNavigation extends Component {
+    
     constructor(props) {
         super(props)
     
@@ -55,27 +55,17 @@ export default class Index extends Component {
                                 <li class="nav-item">
                                     <a class="nav-link" href="/index">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/allAd">Advertise</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/about">About</a>
-                                </li>
                             </ul>
                         </div>
 
                         <ul className="navbar-nav ml-auto">
                             <UncontrolledDropdown nav inNavbar style={{ marginRight: '20px' }}>
                                 <DropdownToggle nav caret>
-                                    {this.state.user.username}
+                                    Go
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem onClick={this.goToUserdash} redirect="##">
-                                    <a class="nav-link" href="/addAD"> Advertise </a>
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem onClick={this.handleLogout}>
-                                        <a class="nav-link"> Logout </a>
+                                        <a class="nav-link" href="/ulogin"> Login </a>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
@@ -86,3 +76,5 @@ export default class Index extends Component {
         )
     }
 }
+
+export default withRouter(UserNavigation)

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios' 
 import { Container, UncontrolledDropdown,DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Link, withRouter } from 'react-router-dom'
 
-export default class SideTop extends Component {
+class SideTop extends Component {
     constructor(props) {
         super(props)
     
@@ -37,17 +38,6 @@ export default class SideTop extends Component {
             <nav id="a" class="navbar navbar navbar-light bg-light navbar-expand-lg text-white navbar-fixed-top txt" style={{ minHeight: '80px' }}>
                     <Container>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">Advertise</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/about">About</a>
-                                </li>
-                            </ul>
 
                             <ul className="navbar-nav ml-auto">
                             <UncontrolledDropdown nav inNavbar style={{ marginRight: '20px' }}>
@@ -55,10 +45,6 @@ export default class SideTop extends Component {
                                     {this.state.user.username}
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem onClick={this.goToUserdash} redirect="##">
-                                    <a class="nav-link" href="/addAD"> Advertise </a>
-                                    </DropdownItem>
-                                    <DropdownItem divider />
                                     <DropdownItem onClick={this.handleLogout}>
                                         <a class="nav-link"> Logout </a>
                                     </DropdownItem>
@@ -72,3 +58,4 @@ export default class SideTop extends Component {
         )
     }
 }
+export default withRouter(SideTop)

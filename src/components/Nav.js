@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Container} from 'reactstrap'
 import axios from 'axios' 
 import { Navbar, UncontrolledDropdown,DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-export default class Nav extends Component {
+class Nav extends Component {
   constructor(props) {
     super(props)
 
@@ -77,3 +77,4 @@ export default class Nav extends Component {
     }
 }
 
+export default withRouter(Nav);

@@ -8,6 +8,7 @@ export default class TaskList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            alert1: false,
             verified:false,
             sort: false,
             imageView: false,
@@ -51,16 +52,20 @@ export default class TaskList extends Component {
         })
     }
 
-    verifyVehicle(vehicleId) {
-        axios.put(`http://localhost:3001/vehicles/{$vehicleId}/verify`,
-        {verified: this.state.verified}, 
-        this.setState.config)
-        .then((response) => {
-            console.log(response.data);
-            this.setState({
-                verified:this.state.verified
-            })
+    toogle() {
+        this.setState({
+            alert1: !this.state.alert1
         })
+    }
+
+    verifyVehicle(vehicleId) {
+        // axios.put(`http://localhost:3001/vehicles/{$vehicleId}/verify`, this.state.config)
+        // .then((response) => {
+            // this.setState({
+            //     verified:this.state.verified
+            // })
+        // })
+      
     }
 
     render() {
@@ -104,7 +109,7 @@ export default class TaskList extends Component {
                                                     <td>  
                                                          <Link onClick={this.toggleEdit}>View image</Link>
                                                     </td>
-                                                    <td><Link onClick={this.verifyVehicle.bind(vehicle._id)}>Verify</Link></td>
+                                                    <td><Link onClick={this.verifyVehicle()}>Verify</Link></td>
                                                 </tr>
                                             })
                                         }

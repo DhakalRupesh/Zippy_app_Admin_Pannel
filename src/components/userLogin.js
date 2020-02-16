@@ -39,7 +39,7 @@ export default class Login extends Component {
 
     render() {
         if (this.state.isLoggedIn) {
-            return <Redirect to='/index' />
+            return <Redirect to='/addAd' />
         } 
         return (
             <div>

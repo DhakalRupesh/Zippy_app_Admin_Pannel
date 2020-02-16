@@ -4,7 +4,9 @@ import Nav from './SideTop'
 import axios from 'axios' 
 import './Custom_css/addadvertise.css'
 import './Custom_css/profile.css'
-import { Container } from 'reactstrap'
+import { Container, CustomInput } from 'reactstrap'
+import FileUploadButton from './FileUploadButton'
+
 
 
 export default class Profile extends Component {
@@ -28,7 +30,38 @@ export default class Profile extends Component {
       })
       .catch((err) => console.log(err.response));
       }
+
+    handleFileSelect = (e) => {
+    this.setState({
+        selectedFile: e.target.files[0]
+        })
+    }
+
+    uploadFile = (e) => {
+        e.preventDefault();
+        const data = new FormData()
+        data.append('imageFile', this.state.selectedFile)
+        axios.post('http://localhost:3001/uploads', data, this.state.config)
+            .then((response) => {
+                this.setState({
+                    user: { ...this.state.user, userimage: response.data.filename }
+                })
+            }).catch((err) => console.log(err.response))
+    }
     
+    updateUser = (e) => {
+        e.preventDefault();
+        axios.put('http://localhost:3001/user/updateme', this.state.user, this.state.config)
+            .then((response) => console.log(response.data)).catch((err) => console.log(err.response))
+        this.props.history.push('/profile');
+    }
+
+    handleChange(e) {
+        this.setState({
+            user: { ...this.state.user, [e.target.name]: e.target.value }
+        })
+    }
+
     render() {
         return (
             <div>
@@ -66,44 +99,56 @@ export default class Profile extends Component {
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">First Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text"  value={this.state.user.fname} class="form-control" name="fname" />
+                                                <input type="text"  value={this.state.user.fname} class="form-control" 
+                                                id="fname" name="fname" onChange={(e) => this.handleChange(e)} />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">Last Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text"  value={this.state.user.lname} class="form-control" name="lname" />
+                                                <input type="text"  value={this.state.user.lname} class="form-control" 
+                                                id="lname" name="lname" onChange={(e) => this.handleChange(e)} />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">Mobile</label>
                                             <div class="col-sm-9">
-                                                <input type="number"value={this.state.user.mobile}   class="form-control" name="phone" />
+                                                <input type="number"value={this.state.user.mobile}   class="form-control" 
+                                                id="phone" name="phone" onChange={(e) => this.handleChange(e)}/>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="eamil" class="col-sm-3 col-form-label text-left">Eamil</label>
                                             <div class="col-sm-9">
-                                                <input type="text"  value={this.state.user.email} class="form-control" name="email"   readonly disabled/>
-                                                <small class="text-danger">NOTE: You cannot update your email</small>
+                                                <input type="text"  value={this.state.user.email} class="form-control" 
+                                                id="email" name="email" onChange={(e) => this.handleChange(e)}/>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">Username</label>
                                             <div class="col-sm-9">
-                                                <input type="text"  value={this.state.user.username} class="form-control" name="username" />
+                                                <input type="text"  value={this.state.user.username} class="form-control" 
+                                                id="username" name="username" onChange={(e) => this.handleChange(e)}/>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-3 col-form-label text-left">Description</label>
                                             <div class="col-sm-9">
-                                                <input type="text"  value={this.state.user.description} class="form-control" name="description" />
+                                                <input type="text"  value={this.state.user.description} class="form-control" 
+                                                id="description" name="description" onChange={(e) => this.handleChange(e)} />
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <CustomInput type='file' id='userimage'
+                                                onChange={this.handleFileSelect} />
+                                            {this.state.selectedFile ? (<FileUploadButton
+                                                uploadFile={this.uploadFile} />) : null}
                                         </div>
 
                                         <p class="text-center">
