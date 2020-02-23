@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Nav from  './Nav'
+import Nav from './Nav'
 
 export default class TaskList extends Component {
     constructor(props) {
@@ -11,6 +11,7 @@ export default class TaskList extends Component {
             sort: false,
             isEdit: false,
             users: [],
+            allinfo: {},
             isLoaded: false,
             config: {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -19,36 +20,32 @@ export default class TaskList extends Component {
     }
 
     toggleEdit = (e) => {
+        axios.get(`http://localhost:3001/user/users/${e}`, this.state.config)
+            .then((response) => {
+                console.log(response.data)
+                this.setState({
+                    allinfo: response.data,
+                })
+            }).catch((err) => console.log(err.response));
         this.setState({
             isEdit: !this.state.isEdit
         })
     }
 
-    // handleTaskChange = (e) => {
-    //     this.setState({
-    //         taskName: e.target.value,
-    //     })
-    // }
-
-    // handleDoneChange = (e) => {
-    //     this.setState({
-    //         taskDone: e.target.checked
-    //     })
-    // }
     componentDidMount() {
         axios.get('http://localhost:3001/user/users', this.state.config)
-        .then((response) => {
-            this.setState({
-                user: response.data,
-                isLoaded: true
-            })
-        }).catch((err) => console.log(err.response));
+            .then((response) => {
+                this.setState({
+                    user: response.data,
+                    isLoaded: true
+                })
+            }).catch((err) => console.log(err.response));
     }
 
     render() {
-        var{ isLoaded, user } = this.state;
- 
-        if(!isLoaded) {
+        var { isLoaded, user } = this.state;
+
+        if (!isLoaded) {
             return <div className="txt-center"> Error!! loading the data </div>
         } else {
             return (
@@ -62,25 +59,24 @@ export default class TaskList extends Component {
                             </p>
                         </div>
                         <React.Fragment>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                    <th>View Details</th>
-                                    {/* <th>Sort</th> */}
-                                </tr>
-                            </thead>
+                            <Table bordered>
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                        <th>View Details</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     {
-                                        user.map((user)=>{
-                                        return <tr key={user._id}>
+                                        user.map((user) => {
+                                            return <tr key={user._id}>
                                                 <td>{user.fname}</td>
                                                 <td>{user.lname}</td>
                                                 <td>{user.username}</td>
                                                 <td>
-                                                    <Link onClick={this.toggleEdit}>View</Link>
+                                                    <Button color="primary" onClick={this.toggleEdit.bind(this, user._id)}>View</Button>
                                                 </td>
                                             </tr>
                                         })
@@ -93,12 +89,16 @@ export default class TaskList extends Component {
                                     User Details
                                 </ModalHeader>
                                 <ModalBody>
-                                
+                                    <p className="text-center">
+                                        <img className="circular--square userimage" src={`http://localhost:3001/uploads/${this.state.allinfo.userimage}`} alt="userphoto" />
+                                    </p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>First Name: <span class="font-weight-bold"> {this.state.allinfo.fname} </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Last Name: <span class="font-weight-bold"> {this.state.allinfo.lname} </span></p>
+                                    <p class="p-2"><i class="fa fa-phone p-2 mr-1 i"></i>Mobile: <span class="font-weight-bold"> {this.state.allinfo.mobile} </span></p>
+                                    <p class="p-2"><i class="fa fa-envelope p-2 mr-1 i"></i>Email: <span class="font-weight-bold">{this.state.allinfo.email} </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Username: <span class="font-weight-bold"> {this.state.allinfo.username} </span></p>
+                                    <p class="p-2"><i class="fa fa-edit p-2 mr-1 i"></i> Description: <span class="font-weight-bold"> {this.state.allinfo.description} </span></p>
                                 </ModalBody>
-                                <ModalFooter>
-                                    <Button color="primary" >Do Something</Button>{' '}
-                                    <Button color="secondary" >Cancel</Button>
-                                </ModalFooter>
                             </Modal>
                         </React.Fragment>
                     </Container>

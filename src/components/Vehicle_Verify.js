@@ -14,6 +14,7 @@ export default class TaskList extends Component {
             imageView: false,
             vehicle: [],
             veh: {},
+            vechOwner: {},
             isLoaded: false,
             licenseImage: {},
             upStatus: 'true',
@@ -29,10 +30,12 @@ export default class TaskList extends Component {
     toggleEdit = (e) => {
         Axios.get(`http://localhost:3001/vehicles/${e}`, this.state.config)
             .then((response) => {
-                console.log(response.data)
+
+                console.log(response.data.vehicleOf);
 
                 this.setState({
                     licenseImage: response.data,
+                    vechOwner: response.data.vehicleOf
                 })
             }).catch((err) => console.log(err.response));
         this.setState({
@@ -74,12 +77,6 @@ export default class TaskList extends Component {
             delMessage: !this.state.delMessage
         })
     }
-
-    // handleChange(e) {
-    //     this.setState({
-    //         upStatus: { ...this.state.upStatus, [e.target.name]: e.target.value }
-    //     })
-    // }
 
     licenseImage = (e) => {
         Axios.get(`http://localhost:3001/vehicles/${e}`, this.state.config)
@@ -147,8 +144,6 @@ export default class TaskList extends Component {
                                     id="vehicleneed" name="search" />
                             </form>
                             <Alert color="danger" isOpen={this.state.delMessage} toggle={this.toogle.bind(this)}>Vehicle verificaiton removed</Alert>
-                            {/* <Alert color="danger" isOpen={} toggle={}>Vehicle verificaiton removed</Alert>
-                            <Alert color="danger" isOpen={} toggle={}>Vehicle unverified</Alert> */}
                             <Table bordered>
                                 <thead>
                                     <tr>
@@ -172,7 +167,7 @@ export default class TaskList extends Component {
                                                 <td value={this.state.search} onChange={this.updateSearch.bind(this)}>{vehicle.license_no}</td>
                                                 <td>{vehicle.verified}</td>
                                                 <td>
-                                                    <Button color="primary" onClick={this.toggleEdit.bind(this, vehicle._id)}>More</Button>
+                                                    <Button color="primary" onClick={this.toggleEdit.bind(this, vehicle._id)}>License Image</Button>
                                                 </td>
                                                 <td>
                                                     <Button className="mr-2" color="success" onClick={this.verifyVehicle.bind(this, vehicle._id)}>Verify</Button>
@@ -192,21 +187,20 @@ export default class TaskList extends Component {
                                 </ModalHeader>
                                 <ModalBody>
                                     <label>License Image</label>
+                                    <pre></pre>
                                     <img className="userimage"
                                         src={`http://localhost:3001/uploads/${this.state.licenseImage.license_Image}`}
                                         alt="Image not available"
                                         style={{ height: '100%', width: '100%', borderRadius: '18px' }}
                                     />
+                                    <label>Owners Information</label>
                                     <pre></pre>
-                                    {/* <label>Owners Information</label>
-                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>First Name: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.fname} </span></p>
-                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Last Name: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.lname} </span></p>
-                                    <p class="p-2"><i class="fa fa-phone p-2 mr-1 i"></i>Mobile: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.mobile} </span></p>
-                                    <p class="p-2"><i class="fa fa-envelope p-2 mr-1 i"></i>Email: <span class="font-weight-bold"> 
-                                    {this.state.licenseImage.vehicleOf.email}
-                                    </span></p>
-                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Username: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.username} </span></p>
-                                    <p class="p-2"><i class="fa fa-edit p-2 mr-1 i"></i> Description: <span class="font-weight-bold"> {this.state.licenseImage.vehicleOf.description} </span></p> */}
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>First Name: <span class="font-weight-bold"> {this.state.vechOwner.fname} </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Last Name: <span class="font-weight-bold"> {this.state.vechOwner.lname} </span></p>
+                                    <p class="p-2"><i class="fa fa-phone p-2 mr-1 i"></i>Mobile: <span class="font-weight-bold"> {this.state.vechOwner.mobile} </span></p>
+                                    <p class="p-2"><i class="fa fa-envelope p-2 mr-1 i"></i>Email: <span class="font-weight-bold">{this.state.vechOwner.email} </span></p>
+                                    <p class="p-2"><i class="fa fa-user p-2 mr-1 i"></i>Username: <span class="font-weight-bold"> {this.state.vechOwner.username} </span></p>
+                                    <p class="p-2"><i class="fa fa-edit p-2 mr-1 i"></i> Description: <span class="font-weight-bold"> {this.state.vechOwner.description} </span></p>
                                 </ModalBody>
                             </Modal>
                         </React.Fragment>

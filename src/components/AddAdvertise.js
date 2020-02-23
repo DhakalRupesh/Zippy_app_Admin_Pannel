@@ -10,7 +10,7 @@ import { Alert, CustomInput, Container } from 'reactstrap'
 export default class AddAdvertise extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
             alert1: false,
             alert2: false,
@@ -40,7 +40,7 @@ export default class AddAdvertise extends Component {
         })
     }
 
-    toogleSuccess(){
+    toogleSuccess() {
         this.setState({
             alert2: !this.state.alert2
         })
@@ -48,7 +48,7 @@ export default class AddAdvertise extends Component {
 
     componentDidMount() {
         Axios.get('http://localhost:3001/user/retriveme', this.state.config)
-            .then((response)=>{
+            .then((response) => {
                 console.log(response.data)
                 this.setState({
                     user: response.data
@@ -69,7 +69,7 @@ export default class AddAdvertise extends Component {
         data.append('imageFile', this.state.selectedFile)
         Axios.post('http://localhost:3001/uploads', data, this.state.config)
             .then((response) => {
-                console.log(response.data.filename);    
+                console.log(response.data.filename);
                 this.setState({
                     image: response.data.filename,
                     alert1: true,
@@ -90,21 +90,21 @@ export default class AddAdvertise extends Component {
             negociable: this.state.negociable,
             ad_image: this.state.image,
         }, this.state.config)
-        .then((response) => {
-            console.log(response.data);
-            this.setState({
-                goodstype: '',
-                vehicleneed: '',
-                sendfrom: '',
-                destinationofdelivery: '',
-                priceofdelivery: '',
-                negociable: '',
-                ad_image: '',
-                alert2: true
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    goodstype: '',
+                    vehicleneed: '',
+                    sendfrom: '',
+                    destinationofdelivery: '',
+                    priceofdelivery: '',
+                    negociable: '',
+                    ad_image: '',
+                    alert2: true
+                })
             })
-        })
     }
-    
+
     render() {
         return (
             <div>
@@ -112,44 +112,44 @@ export default class AddAdvertise extends Component {
                 <Sidebar></Sidebar>
                 <div className="add_user_Main shadow-sm ">
                     <h3 className="mb-4">Request Dilevery</h3>
-                   
+
                     <form>
                         <Alert color="success" isOpen={this.state.alert1} toggle={this.toogle.bind(this)}>Image Added</Alert>
                         <Alert color="success" isOpen={this.state.alert2} toggle={this.toogleSuccess.bind(this)}> Advertise Added </Alert>
                         <div className="form-group">
                             <label for="typesofdilevery">Type of dilevery</label>
-                            <input type="text" name="goodstype" className="form-control" placeholder="eg: room shift, docs, furniture" 
-                            value={this.state.goodstype} onChange={this.handleChange} required/>
+                            <input type="text" name="goodstype" className="form-control" placeholder="eg: room shift, docs, furniture"
+                                value={this.state.goodstype} onChange={this.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label for="vehicleneeded">Vehicle Needed</label>
                             <select className="form-control" name="vehicleneed"
-                            value={this.state.vehicleneed} onChange={this.handleChange} required>
-                            <option >Please select...</option>
+                                value={this.state.vehicleneed} onChange={this.handleChange} required>
+                                <option >Please select...</option>
                                 <option >4 Wheeler</option>
                                 <option>2 Wheeler</option>
                             </select>
                         </div>
                         <div className="form-group">
                             <label for="sendingLocation">Sending from</label>
-                            <input type="text" name="sendfrom" className="form-control" placeholder="eg: Kathmandu" 
-                            value={this.state.sendfrom} onChange={this.handleChange} required/>
+                            <input type="text" name="sendfrom" className="form-control" placeholder="eg: Kathmandu"
+                                value={this.state.sendfrom} onChange={this.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label for="sendiingtolocation">Sending to</label>
-                            <input type="text" name="destinationofdelivery" className="form-control" placeholder="eg: Pokhara" 
-                            value={this.state.destinationofdelivery} onChange={this.handleChange} required/>
+                            <input type="text" name="destinationofdelivery" className="form-control" placeholder="eg: Pokhara"
+                                value={this.state.destinationofdelivery} onChange={this.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label for="setprice">Set Price</label>
-                            <input type="number" name="priceofdelivery" className="form-control" placeholder="eg: RS 1500" 
-                            value={this.state.priceofdelivery} onChange={this.handleChange} required/>
-                        </div>  
+                            <input type="number" name="priceofdelivery" className="form-control" placeholder="eg: RS 1500"
+                                value={this.state.priceofdelivery} onChange={this.handleChange} required />
+                        </div>
                         <div className="form-group">
                             <label for="inputState">Negotiable</label>
                             <select id="negotiable" name="negociable" className="form-control"
-                            value={this.state.negociable} onChange={this.handleChange} required >
-                            <option>Please select...</option>
+                                value={this.state.negociable} onChange={this.handleChange} required >
+                                <option>Please select...</option>
                                 <option >Yes</option>
                                 <option>No</option>
                             </select>
